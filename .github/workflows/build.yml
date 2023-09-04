@@ -3,7 +3,7 @@ name: Build JSON from YAML
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
