@@ -1,0 +1,63 @@
+{
+    "children": [
+        {
+            "name": "domain_info",
+            "children": [
+                {
+                    "tools": [
+                        {
+                            "name": "Tool Name 1",
+                            "url": "https://example.com/tool1",
+                            "description": "Description for Tool 1"
+                        },
+                        {
+                            "name": "Tool Name 2",
+                            "url": "https://example.com/tool2",
+                            "description": "Description for Tool 2"
+                        }
+                    ],
+                    "children": [
+                        {
+                            "name": "domain_info_sub",
+                            "children": [
+                                {
+                                    "tools": [
+                                        {
+                                            "name": "Tool Name 1",
+                                            "url": "https://example.com/tool1",
+                                            "description": "Description for Tool 1"
+                                        },
+                                        {
+                                            "name": "Tool Name 2",
+                                            "url": "https://example.com/tool2",
+                                            "description": "Description for Tool 2"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Username",
+            "children": [
+                {
+                    "tools": [
+                        {
+                            "name": "Tool Name 1",
+                            "url": "https://example.com/tool1",
+                            "description": "Description for Tool 1"
+                        },
+                        {
+                            "name": "Tool Name 2",
+                            "url": "https://example.com/tool2",
+                            "description": "Description for Tool 2"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
