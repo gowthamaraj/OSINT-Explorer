@@ -1,0 +1,37 @@
+name: Build JSON from YAML
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install PyYAML
+
+    - name: Generate JSON from YAML
+      run: python yaml_to_js.py
+
+    - name: Move data.json to public folder
+      run: mv data.json public/
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add public/data.json
+        git commit -m "Generated data.json from YAML data and moved to public folder" || echo "No changes to commit"
+        git push

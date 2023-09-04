@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "osint-explorer"
+version = "0.1.0"
+description = ""
+authors = ["Gowthamaraj rajendran <gowthamaraj360@gmail.com>"]
+readme = "README.md"
+packages = [{include = "osint_explorer"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pyyaml = "^6.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
