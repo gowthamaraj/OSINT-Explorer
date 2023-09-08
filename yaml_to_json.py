@@ -12,7 +12,8 @@ def process_directory(path):
     # If tools.yaml exists, read it
     if os.path.exists(tools_file):
         with open(tools_file, 'r') as f:
-            category_data = yaml.safe_load(f)
+            tools = yaml.safe_load(f)["tools"]
+            category_data["children"] = tools  # Change here
     
     # Process subcategories
     subcategories = []
@@ -23,7 +24,7 @@ def process_directory(path):
             subcategory_name = item.split('-')[1]  # Extract name from "01-name"
             subcategories.append({
                 "name": subcategory_name,
-                "children": [subcategory_data]
+                "children": subcategory_data["children"]
             })
     
     # If there are subcategories, add them to the children list
@@ -37,9 +38,10 @@ def process_directory(path):
 def main():
     root_path = "data"
     tree_data = process_directory(root_path)
+    tree_data = {"name":"OSINT Explorer","children":tree_data["children"]}
     
     # Save the result as JSON
-    with open("data.json", 'w') as f:
+    with open("public/data.json", 'w') as f:
         json.dump(tree_data, f, indent=4)
 
 if __name__ == "__main__":

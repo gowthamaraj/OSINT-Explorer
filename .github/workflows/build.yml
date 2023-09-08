@@ -23,10 +23,7 @@ jobs:
         pip install PyYAML
 
     - name: Generate JSON from YAML
-      run: python yaml_to_js.py
-
-    - name: Move data.json to public folder
-      run: mv data.json public/
+      run: python yaml_to_json.py
 
     - name: Commit and push changes
       run: |
