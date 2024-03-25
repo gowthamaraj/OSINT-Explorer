@@ -1,41 +1,24 @@
 body {
-  background-color: #ffffff;
-  font-size: 14px;
-  font-family: "Helvetica Neue", Helvetica;
-}
-
-#body {
-  margin: 0 5px;
-  position: relative;
+  background-color: #121212; /* Darker background */
+  color: #e0e0e0;
+  font-family: "Courier New", Courier, monospace; /* Change to a monospace font for a more 'hacky' feel */
+  height: 90%; /* 100% of the viewport height */
+  width: 90%;
 }
 
 #header {
-  top: 20px;
+  background-color: #1a1a1a; /* Darker shade for header */
+  color: #00ff00; /* Bright green text, common in hacking themes */
+  border-bottom: 2px solid #444; /* Add a green bottom border */
   text-align: center;
   padding: 20px;
-  background-color: #f8f9fa;
-  /* Bootstrap's light gray color */
 }
 
-.node {
-  cursor: pointer;
-  margin: auto 10px;
-}
-
-.node circle {
-  cursor: pointer;
-  fill: #fff;
-  stroke: rgb(216, 89, 30);
-  stroke-width: 1.5px;
-}
-
-.node text {
-  font-size: 12px;
-  fill: rgb(0, 0, 0);
-}
-
-path.link {
-  fill: none;
-  stroke: #ccc;
-  stroke-width: 1px;
+#treeChart {
+  background-color: #333; /* Keep the dark background */
+  border: 1px solid #444; /* Optional: add a subtle border */
+  width: 100%; /* Take full width of its parent */
+  text-align: center;
+  margin: auto; /* Center it horizontally */
+  overflow: auto; /* Adds scrollbars if content overflows */
 }
