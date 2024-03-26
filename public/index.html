@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -11,47 +11,35 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
   <!-- ECharts JavaScript file -->
   <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-  <title>OSINT Framework</title>
+  <link rel="icon" href="title.webp" type="image/webp">
+  <title>OSINT DB</title>
 </head>
 
-<body class="container-fluid p-1">
-  <div id="body">
-    <div id="header" class="bg-dark">
-      <div class="spinner-border text-danger"></div>
-      <h1 class="text-white">
-        OSINT Explorer
-      </h1>
-      <!-- Button to Open the Modal -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-        How to use
-      </button>
+<body class="container-fluid p-0">
+  <div id="header" class="bg-dark">
+    <img src="logo.webp" alt="OSINT Explorer Logo">
+    <h1 class="text-white">
+      OSINT Database
+    </h1>
+  </div>
+  <div id="treeChart" style="flex-grow: 1;"></div>
 
-      <!-- The Modal -->
-      <div class="modal" id="myModal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Heading</h4>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-              #
-            </div>
-
-          </div>
+  <!-- Node Information Modal -->
+  <div class="modal fade" id="nodeInfoModal" tabindex="-1" aria-labelledby="nodeInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title" id="nodeInfoModalLabel">Node Information</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="nodeInfoContent">
+          <!-- Dynamic content will be loaded here -->
         </div>
       </div>
     </div>
-       <div id="treeChart" style="width: 100%;height:600px;"></div>
   </div>
 
   <script src="js/script.js"></script>
-
-
 
 </body>
 
