@@ -8,7 +8,7 @@ const categories = new Set();
 function initTreeChart() {
   // Show loading indicator
   document.getElementById('loading').style.display = 'flex';
-  
+
   fetch('data.json')
     .then(response => response.json())
     .then(rawData => {
@@ -16,7 +16,7 @@ function initTreeChart() {
       renderChart(chartData);
       buildSearchIndex(chartData);
       document.getElementById('loading').style.display = 'none';
-      
+
       // Initialize the category filter
       initCategoryFilter();
     })
@@ -43,7 +43,7 @@ function preprocessData(data) {
     'Maps': '🗺️',
     'default': '🔍'
   };
-  
+
   const categoryColors = {
     'Username': '#4e79a7',
     'domain_info': '#76b7b2',
@@ -62,27 +62,27 @@ function preprocessData(data) {
     if (depth === 1) {
       categories.add(node.name);
     }
-    
+
     // Get icon and color based on category or use default
-    const icon = depth === 1 ? 
-      categoryIcons[node.name] || categoryIcons['default'] : 
+    const icon = depth === 1 ?
+      categoryIcons[node.name] || categoryIcons['default'] :
       (node.children ? '📁' : '🔗');
-    
-    const color = depth === 1 ? 
-      categoryColors[node.name] || categoryColors['default'] : 
+
+    const color = depth === 1 ?
+      categoryColors[node.name] || categoryColors['default'] :
       (node.children ? '#555' : '#8ca0ff');
-    
+
     // Add properties to node
-    node.itemStyle = { 
-      color: color, 
+    node.itemStyle = {
+      color: color,
       borderRadius: 10,
       borderWidth: 2,
       borderColor: '#00ff00'
     };
-    
+
     node.originalName = node.name;
     node.name = `${icon} ${node.name}`;
-    
+
     // Add tooltip with description if available
     if (node.description) {
       node.tooltip = {
@@ -93,7 +93,7 @@ function preprocessData(data) {
         </div>`
       };
     }
-    
+
     // Process children recursively
     if (node.children && node.children.length > 0) {
       node.children.forEach(child => assignProperties(child, depth + 1));
@@ -108,7 +108,7 @@ function preprocessData(data) {
 function renderChart(data) {
   const container = document.getElementById('treeChart');
   myChart = echarts.init(container);
-  
+
   const option = {
     tooltip: {
       trigger: 'item',
@@ -190,7 +190,7 @@ function renderChart(data) {
       }
     }
   };
-  
+
   myChart.setOption(option);
 
   // Resize handler
@@ -210,12 +210,12 @@ function renderChart(data) {
 function showNodeInfo(nodeData) {
   const modalTitle = document.getElementById('nodeInfoModalLabel');
   const modalBody = document.getElementById('nodeInfoContent');
-  
+
   // Clean up the node name (remove emoji)
   const cleanName = nodeData.originalName || nodeData.name.substring(2).trim();
-  
+
   modalTitle.innerHTML = cleanName;
-  
+
   // Build modal content with enhanced styling
   let modalContent = `
     <div class="card bg-dark border-success mb-3">
@@ -225,7 +225,7 @@ function showNodeInfo(nodeData) {
       </div>
     </div>
   `;
-  
+
   if (nodeData.url) {
     modalContent += `
       <div class="card bg-dark border-info">
@@ -241,12 +241,12 @@ function showNodeInfo(nodeData) {
       </div>
     `;
   }
-  
+
   modalBody.innerHTML = modalContent;
-  
+
   // Show the modal
   new bootstrap.Modal(document.getElementById('nodeInfoModal')).show();
-  
+
   // Add event listener for copy button
   const copyUrlBtn = document.getElementById('copyUrlBtn');
   if (copyUrlBtn) {
@@ -265,111 +265,190 @@ function showNodeInfo(nodeData) {
 // Build search index from data
 function buildSearchIndex(data) {
   const searchIndex = [];
-  
+
   function traverse(node, path = []) {
     const currentPath = [...path, node.name];
+    const cleanName = node.originalName || node.name.substring(2).trim();
+
+    // Add all nodes to search index, not just leaf nodes
+    searchIndex.push({
+      name: cleanName,
+      path: currentPath.map(p => p.substring(2).trim()).join(' > '),
+      url: node.url,
+      description: node.description,
+      nodeRef: node,
+      hasChildren: node.children && node.children.length > 0
+    });
     
-    if (!node.children) {
-      searchIndex.push({
-        name: node.originalName || node.name.substring(2).trim(),
-        path: currentPath.map(p => p.substring(2).trim()).join(' > '),
-        url: node.url,
-        description: node.description,
-        nodeRef: node
-      });
-    } else {
-      if (node.children && node.children.length > 0) {
-        node.children.forEach(child => traverse(child, currentPath));
-      }
+    // Process children recursively
+    if (node.children && node.children.length > 0) {
+      node.children.forEach(child => traverse(child, currentPath));
     }
   }
-  
+
   traverse(data);
-  
+
   // Attach search index to window for easy access
   window.searchIndex = searchIndex;
 }
 
 // Search function
 function performSearch(query) {
+  const searchResults = document.getElementById('searchResults');
+  const searchInput = document.getElementById('searchInput');
+  
+  // Clear results if query is empty or too short
   if (!query || query.length < 2) {
-    document.getElementById('searchResults').innerHTML = '';
-    document.getElementById('searchResults').style.display = 'none';
+    searchResults.innerHTML = '';
+    searchResults.style.display = 'none';
     return;
   }
-  
-  query = query.toLowerCase();
-  
+
+  query = query.toLowerCase().trim();
+
+  // Filter search index
   const results = window.searchIndex.filter(item => 
     item.name.toLowerCase().includes(query) || 
     (item.description && item.description.toLowerCase().includes(query))
-  ).slice(0, 10);
-  
-  const resultContainer = document.getElementById('searchResults');
-  
+  ).slice(0, 10); // Limit to top 10 results
+
+  // If no results found
   if (results.length === 0) {
-    resultContainer.innerHTML = '<p class="text-center p-3">No results found</p>';
-  } else {
-    let resultHTML = '';
-    results.forEach(result => {
-      resultHTML += `
-        <div class="search-result" data-path="${result.path}">
-          <h6>${result.name}</h6>
-          <small class="text-muted">${result.path}</small>
-          ${result.description ? `<p class="small">${result.description.substring(0, 100)}${result.description.length > 100 ? '...' : ''}</p>` : ''}
-        </div>
-      `;
-    });
-    resultContainer.innerHTML = resultHTML;
-    
-    // Add click event to results
-    document.querySelectorAll('.search-result').forEach(item => {
-      item.addEventListener('click', function() {
-        const resultPath = this.getAttribute('data-path');
-        const result = window.searchIndex.find(r => r.path === resultPath);
-        
-        if (result) {
-          showNodeInfo(result.nodeRef);
-          document.getElementById('searchResults').style.display = 'none';
-          document.getElementById('searchInput').value = '';
-        }
-      });
-    });
+    searchResults.innerHTML = '<p class="text-center p-3 text-muted">No results found</p>';
+    searchResults.style.display = 'block';
+    return;
   }
-  
-  resultContainer.style.display = 'block';
+
+  // Build results HTML
+  let resultHTML = '';
+  results.forEach(result => {
+    const iconClass = result.hasChildren ? 'fa-folder' : 'fa-link';
+    
+    resultHTML += `
+      <div class="search-result" data-node-id="${encodeURIComponent(JSON.stringify(result.nodeRef))}">
+        <h6><i class="fas ${iconClass} me-2"></i>${result.name}</h6>
+        <small class="text-muted d-block mb-1">${result.path}</small>
+        ${result.description ? 
+          `<p class="small mb-0">${result.description.length > 100 ? 
+            result.description.substring(0, 100) + '...' : 
+            result.description}</p>` : 
+          ''}
+      </div>
+    `;
+  });
+
+  searchResults.innerHTML = resultHTML;
+  searchResults.style.display = 'block';
+
+  // Add click event listeners to search results
+  document.querySelectorAll('.search-result').forEach(item => {
+    item.addEventListener('click', function() {
+      try {
+        const nodeData = JSON.parse(decodeURIComponent(this.getAttribute('data-node-id')));
+        if (nodeData) {
+          // If it's a leaf node, show info modal
+          if (!nodeData.children || nodeData.children.length === 0) {
+            showNodeInfo(nodeData);
+          } else {
+            // If it's a parent node, highlight and expand it in the chart
+            highlightNode(nodeData);
+          }
+          
+          // Clear search
+          searchInput.value = '';
+          searchResults.style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Error processing search result:', error);
+      }
+    });
+  });
 }
 
-// Initialize category filter
+// Highlight and navigate to a node in the chart
+function highlightNode(nodeData) {
+  if (!myChart) return;
+  
+  // First, find the node path to expand all parent nodes
+  let nodePath = [];
+  
+  function findNodePath(node, target, currentPath = []) {
+    if (node.originalName === target.originalName) {
+      nodePath = [...currentPath, node.originalName];
+      return true;
+    }
+    
+    if (node.children && node.children.length > 0) {
+      for (const child of node.children) {
+        if (findNodePath(child, target, [...currentPath, node.originalName])) {
+          return true;
+        }
+      }
+    }
+    
+    return false;
+  }
+  
+  findNodePath(chartData, nodeData);
+  
+  // Expand all nodes in the path
+  myChart.dispatchAction({
+    type: 'treeExpandToNode',
+    seriesIndex: 0,
+    dataIndex: nodePath.join('/')
+  });
+  
+  // Highlight the node
+  myChart.dispatchAction({
+    type: 'highlight',
+    seriesIndex: 0,
+    dataIndex: nodePath.join('/')
+  });
+  
+  // Center view on the node
+  myChart.dispatchAction({
+    type: 'focusNodeAdjacency',
+    seriesIndex: 0,
+    dataIndex: nodePath.join('/')
+  });
+}
+
+// Initialize category filter (Dropdown with checkboxes)
 function initCategoryFilter() {
-  const filterContainer = document.getElementById('categoryFilter');
-  
-  if (!filterContainer) return;
-  
-  let filterHTML = '<div class="d-flex flex-wrap justify-content-center">';
-  
-  // Add "All" option
-  filterHTML += `
+  const filterDropdownMenu = document.getElementById('categoryFilter');
+
+  if (!filterDropdownMenu) return;
+
+  filterDropdownMenu.innerHTML = ''; // Clear existing content
+
+  // Add "Select All" option
+  const selectAllItem = document.createElement('li');
+  selectAllItem.innerHTML = `
     <div class="form-check form-check-inline m-2">
       <input class="form-check-input" type="checkbox" id="filter-all" checked>
       <label class="form-check-label text-light" for="filter-all">All</label>
     </div>
   `;
-  
-  // Add each category
+  filterDropdownMenu.appendChild(selectAllItem);
+
+  // Add each category as a checkbox in the dropdown menu
   categories.forEach(category => {
-    filterHTML += `
+    const listItem = document.createElement('li');
+    listItem.innerHTML = `
       <div class="form-check form-check-inline m-2">
         <input class="form-check-input filter-category" type="checkbox" id="filter-${category}" checked>
         <label class="form-check-label text-light" for="filter-${category}">${category}</label>
       </div>
     `;
+    filterDropdownMenu.appendChild(listItem);
   });
-  
-  filterHTML += '</div>';
-  filterContainer.innerHTML = filterHTML;
-  
-  // Add event listeners
+
+  // Prevent the dropdown from closing when clicking inside
+  filterDropdownMenu.addEventListener('click', function(event) {
+    event.stopPropagation();
+  });
+
+  // Add event listeners for filtering
   document.getElementById('filter-all').addEventListener('change', function() {
     const checked = this.checked;
     document.querySelectorAll('.filter-category').forEach(checkbox => {
@@ -377,7 +456,7 @@ function initCategoryFilter() {
     });
     applyFilters();
   });
-  
+
   document.querySelectorAll('.filter-category').forEach(checkbox => {
     checkbox.addEventListener('change', function() {
       // Update "All" checkbox based on individual selections
@@ -390,21 +469,21 @@ function initCategoryFilter() {
 
 // Apply category filters
 function applyFilters() {
-  // Get selected categories
-  const selectedCategories = [...document.querySelectorAll('.filter-category:checked')].map(cb => 
+  // Get selected categories from the dropdown checkboxes
+  const selectedCategories = [...document.querySelectorAll('#categoryFilter .filter-category:checked')].map(cb =>
     cb.id.replace('filter-', '')
   );
-  
+
   // Clone the original data
   const filteredData = JSON.parse(JSON.stringify(chartData));
-  
+
   // Filter top-level categories
   if (selectedCategories.length < categories.size) {
-    filteredData.children = filteredData.children.filter(category => 
+    filteredData.children = filteredData.children.filter(category =>
       selectedCategories.includes(category.originalName || category.name.substring(2).trim())
     );
   }
-  
+
   // Re-render chart with filtered data
   renderChart(filteredData);
 }
@@ -413,7 +492,7 @@ function applyFilters() {
 function toggleDarkMode() {
   const body = document.body;
   const darkModeBtn = document.getElementById('darkModeToggle');
-  
+
   if (body.classList.contains('dark-mode')) {
     body.classList.remove('dark-mode');
     darkModeBtn.innerHTML = '<i class="fas fa-moon"></i>';
@@ -423,7 +502,7 @@ function toggleDarkMode() {
     darkModeBtn.innerHTML = '<i class="fas fa-sun"></i>';
     localStorage.setItem('darkMode', 'true');
   }
-  
+
   // Redraw chart if it exists
   if (myChart && chartData) {
     renderChart(chartData);
@@ -434,10 +513,13 @@ function toggleDarkMode() {
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize chart
   initTreeChart();
-  
+
   // Set up search functionality
   const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+  
   if (searchInput) {
+    // Add event listener for input changes with debounce
     searchInput.addEventListener('input', function() {
       clearTimeout(searchTimeout);
       searchTimeout = setTimeout(() => {
@@ -445,14 +527,32 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 300);
     });
     
-    // Close search results when clicking outside
-    document.addEventListener('click', function(event) {
-      if (!event.target.closest('#searchContainer')) {
-        document.getElementById('searchResults').style.display = 'none';
+    // Clear search when ESC key is pressed
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        this.value = '';
+        searchResults.style.display = 'none';
+      }
+    });
+    
+    // Focus search on Ctrl+F or Cmd+F (prevent default browser search)
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+        e.preventDefault();
+        searchInput.focus();
       }
     });
   }
-  
+
+  // Close search results when clicking outside
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('#searchContainer')) {
+      if (searchResults) {
+        searchResults.style.display = 'none';
+      }
+    }
+  });
+
   // Initialize dark mode from localStorage
   if (localStorage.getItem('darkMode') === 'true') {
     document.body.classList.add('dark-mode');
@@ -460,44 +560,48 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-sun"></i>';
     }
   }
-  
+
   // Set up dark mode toggle
   const darkModeBtn = document.getElementById('darkModeToggle');
   if (darkModeBtn) {
     darkModeBtn.addEventListener('click', toggleDarkMode);
   }
-  
+
   // Set up zoom controls
   const zoomInBtn = document.getElementById('zoomIn');
   const zoomOutBtn = document.getElementById('zoomOut');
   const resetZoomBtn = document.getElementById('resetZoom');
-  
+  const expandAllBtn = document.getElementById('expandAll');
+  const collapseAllBtn = document.getElementById('collapseAll');
+
   if (zoomInBtn) {
     zoomInBtn.addEventListener('click', function() {
       if (myChart) {
         const option = myChart.getOption();
+        const currentZoom = (option.series && option.series[0] && option.series[0].zoom) !== undefined ? option.series[0].zoom : 1;
         myChart.setOption({
           series: [{
-            zoom: 1.2
+            zoom: currentZoom * 1.2
           }]
-        }, {replaceMerge: ['series']});
+        });
       }
     });
   }
-  
+
   if (zoomOutBtn) {
     zoomOutBtn.addEventListener('click', function() {
       if (myChart) {
         const option = myChart.getOption();
+        const currentZoom = (option.series && option.series[0] && option.series[0].zoom) !== undefined ? option.series[0].zoom : 1;
         myChart.setOption({
           series: [{
-            zoom: 0.8
+            zoom: currentZoom * 0.8
           }]
-        }, {replaceMerge: ['series']});
+        });
       }
     });
   }
-  
+
   if (resetZoomBtn) {
     resetZoomBtn.addEventListener('click', function() {
       if (myChart) {
@@ -508,6 +612,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  // Expand all nodes
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function() {
+      if (myChart) {
+        myChart.setOption({
+          series: [{
+            initialTreeDepth: -1 // Expand all levels
+          }]
+        });
+      }
+    });
+  }
+  
+  // Collapse all nodes except root
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function() {
+      if (myChart) {
+        myChart.setOption({
+          series: [{
+            initialTreeDepth: 1 // Only show first level
+          }]
+        });
+      }
+    });
+  }
+
   // Initialize tooltips
   const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   tooltipTriggerList.map(function (tooltipTriggerEl) {

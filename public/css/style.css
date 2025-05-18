@@ -174,16 +174,57 @@ body.dark-mode {
   margin-bottom: 0.5rem;
 }
 
-#toolbarLeft, #toolbarRight {
+#toolbarLeft,
+#toolbarMiddle,
+#toolbarRight {
   display: flex;
   align-items: center;
 }
 
-#categoryFilter {
-  margin: 0.5rem 0;
+#toolbarLeft {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+#toolbarMiddle {
+  flex: 1;
+  justify-content: center;
+}
+
+#toolbarRight {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* Category Filter Dropdown Menu styles */
+#categoryFilterDropdown {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#categoryFilterDropdown .btn {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--light-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+#categoryFilterDropdown .btn:hover {
+  background-color: var(--highlight-color);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+#categoryFilterDropdown .dropdown-menu {
+  min-width: 200px;
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   padding: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
 }
 
 /* Chart container */
@@ -280,29 +321,40 @@ body.dark-mode {
     flex-direction: column;
     padding: 0.5rem;
   }
-  
+
   #navbar {
     margin-top: 0.5rem;
     width: 100%;
     justify-content: center;
   }
-  
+
   #searchInput {
     width: 150px;
   }
-  
+
   #searchInput:focus {
     width: 200px;
   }
-  
+
   #searchResults {
     width: 250px;
     right: -50px;
   }
-  
+
   #toolbar {
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 0.5rem;
+  }
+
+  #toolbarLeft,
+  #toolbarMiddle,
+  #toolbarRight {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  #toolbarRight {
+    order: -1; /* Move category filter to top on mobile */
   }
 }
 
@@ -355,4 +407,145 @@ body.dark-mode {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-color);
+}
+/* Updated Search Styles */
+#searchContainer {
+  position: relative;
+  margin-right: 1rem;
+}
+
+#searchInput {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  color: var(--light-text);
+  padding: 0.5rem 1rem 0.5rem 2.5rem; /* Make room for the search icon */
+  width: 200px;
+  transition: width 0.3s, box-shadow 0.3s;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-color);
+  pointer-events: none;
+}
+
+.search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--light-text);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#searchInput:focus {
+  width: 250px;
+  outline: none;
+  box-shadow: 0 0 5px var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+#searchInput:not(:placeholder-shown) + .search-clear {
+  opacity: 1;
+}
+
+#searchResults {
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0;
+  width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: none;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.search-result {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-result:hover {
+  background-color: var(--highlight-color);
+}
+
+.search-result:last-child {
+  border-bottom: none;
+}
+
+.search-result h6 {
+  margin: 0 0 0.25rem 0;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+}
+
+.search-result small {
+  opacity: 0.7;
+  font-size: 0.8rem;
+}
+
+/* Search shortcut hint */
+.search-shortcut {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-size: 0.7rem;
+  color: var(--light-text);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+#searchInput:focus ~ .search-shortcut {
+  display: none;
+}
+
+/* No results message */
+.no-results {
+  text-align: center;
+  padding: 1rem;
+  color: var(--light-text);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #searchInput {
+    width: 150px;
+  }
+
+  #searchInput:focus {
+    width: 180px;
+  }
+
+  #searchResults {
+    width: 250px;
+    right: -50px;
+  }
+}
+
+/* Search results highlight */
+.search-highlight {
+  background-color: rgba(0, 255, 0, 0.2);
+  padding: 0 2px;
+  border-radius: 3px;
 }
