@@ -1,0 +1,10 @@
+tools:
+  - name: "Offshore Leak Database"
+    url: "https://offshoreleaks.icij.org"
+    description: "Database of offshore companies, foundations and trusts from the Panama Papers and other leaks."
+  - name: "File Search Engine"
+    url: "https://www.filesearch.link/"
+    description: "Search engine to find various file types across the web."
+  - name: "SearchFiles.de"
+    url: "https://searchfiles.de/"
+    description: "German search engine for finding files across the web."

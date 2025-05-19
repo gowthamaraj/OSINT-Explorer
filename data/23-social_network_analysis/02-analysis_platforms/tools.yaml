@@ -1,0 +1,10 @@
+tools:
+  - name: "Maltego"
+    url: "https://www.maltego.com"
+    description: "Interactive data mining tool that renders graphs for link analysis and investigation of connections."
+  - name: "Netlytic"
+    url: "https://netlytic.org"
+    description: "Community-supported text and social networks analyzer for discovering social networks from online conversations."
+  - name: "NodeXL"
+    url: "https://nodexl.com"
+    description: "Excel template for network analysis and visualization, particularly useful for social media network analysis."

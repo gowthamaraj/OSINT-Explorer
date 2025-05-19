@@ -1,0 +1,7 @@
+tools:
+  - name: "Ancestry"
+    url: "http://www.ancestry.com"
+    description: "Premium genealogy and family history data, free trial with credit card."
+  - name: "Family Search"
+    url: "https://familysearch.org"
+    description: "Popular genealogy site. Free, but registration required."

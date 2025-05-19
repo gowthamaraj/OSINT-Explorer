@@ -242,6 +242,7 @@ body.dark-mode {
   width: 100%;
   height: 100%;
   min-height: 500px;
+  transition: opacity 0.5s ease;
 }
 
 /* Loading indicator */
@@ -548,4 +549,309 @@ body.dark-mode {
   background-color: rgba(0, 255, 0, 0.2);
   padding: 0 2px;
   border-radius: 3px;
+}
+
+/* Transition message */
+#transitionMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--primary-color);
+  font-weight: bold;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+  opacity: 0;
+  z-index: 100;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#transitionMessage.show {
+  opacity: 1;
+  animation: message-pulse 1.5s ease-in-out;
+}
+
+@keyframes message-pulse {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* Chart transition and animations */
+.chart-transition {
+  transition: opacity 0.3s ease;
+}
+
+#treeChart {
+  transition: opacity 0.5s ease;
+}
+
+.glow-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(0, 255, 0, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  opacity: 0;
+  animation: glow-pulse 0.5s ease-out;
+}
+
+@keyframes glow-pulse {
+  0% { opacity: 0; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+
+/* Node hover animations */
+.echarts-tooltip {
+  animation: tooltip-fade 0.2s ease-in;
+}
+
+@keyframes tooltip-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Enhance view mode dropdown appearance */
+#viewModeDropdown {
+  transition: all 0.2s ease;
+}
+
+#viewModeDropdown:hover {
+  transform: scale(1.1);
+}
+
+.dropdown-menu {
+  animation: dropdown-slide 0.2s ease;
+  transform-origin: top center;
+}
+
+@keyframes dropdown-slide {
+  from { opacity: 0; transform: scaleY(0.8); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+.dropdown-item {
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover::after {
+  content: '';
+  position: absolute;
+  background: linear-gradient(90deg, rgba(0,255,0,0) 0%, rgba(0,255,0,0.2) 50%, rgba(0,255,0,0) 100%);
+  top: 0;
+  left: -100%;
+  right: 0;
+  bottom: 0;
+  width: 300%;
+  animation: shimmer 1s linear;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Enhance chart nodes */
+.echarts-graphical {
+  transition: all 0.3s ease;
+}
+
+/* Improve visual feedback for active view mode */
+.active-view-mode {
+  color: var(--primary-color) !important;
+  font-weight: bold;
+  background-color: rgba(0, 255, 0, 0.1);
+}
+
+/* Enhanced Tree Chart Container */
+#treeChartContainer {
+  position: relative;
+  width: 98%;
+  height: calc(100vh - 180px);
+  min-height: 600px;
+  margin: 15px auto;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  background-color: var(--darker-bg);
+}
+
+#treeChart {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.8s ease;
+  padding: 10px;
+  overflow: hidden;
+}
+
+/* Enhanced Animation Effects */
+.echarts-graphical {
+  transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.node-highlight {
+  filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.8));
+}
+
+.chart-animation-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Improved Tooltip */
+.echarts-tooltip {
+  backdrop-filter: blur(5px);
+  border-radius: 10px !important;
+  box-shadow: 0 6px 16px rgba(0, 255, 0, 0.2) !important;
+  animation: tooltip-reveal 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+  overflow: hidden;
+}
+
+@keyframes tooltip-reveal {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Loading indicator improvements */
+#loading {
+  backdrop-filter: blur(3px);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border-width: 5px;
+  animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Zoom controls enhancement */
+#toolbarLeft .toolbar-btn {
+  margin-right: 5px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#toolbarLeft .toolbar-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Active view state enhancement */
+.active-view-mode {
+  color: var(--primary-color) !important;
+  font-weight: bold;
+  background-color: rgba(0, 255, 0, 0.15);
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+  transform: scale(1.05);
+}
+
+/* Enhanced Tree Chart Container with more spacing */
+#treeChartContainer {
+  position: relative;
+  width: 98%;
+  height: calc(100vh - 120px);
+  min-height: 700px;
+  margin: 15px auto;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  background-color: var(--darker-bg);
+}
+
+#treeChart {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.8s ease;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Spacious visualization styles */
+.node-spacing {
+  margin: 30px;
+}
+
+.chart-container-expanded {
+  padding: 40px;
+}
+
+/* Enhanced node styles */
+.node-element {
+  margin: 15px;
+  padding: 12px;
+}
+
+/* Relaxed tree layout */
+.tree-layout-spacious {
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+
+/* Loading indicator with text */
+#loading {
+  backdrop-filter: blur(3px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.loading-text {
+  color: var(--primary-color);
+  font-size: 16px;
+  margin-top: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+/* Zoom indicator */
+#zoomIndicator {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--primary-color);
+  font-size: 13px;
+  opacity: 0.8;
+  z-index: 900;
+  transition: opacity 0.3s;
+}
+
+#zoomIndicator:hover {
+  opacity: 1;
+}
+
+/* Tree node styles */
+.tree-node {
+  padding: 12px;
+  margin: 8px;
+}
+
+/* Additional spacing for the chart */
+.chart-spacer {
+  margin: 20px;
 }

@@ -1,0 +1,13 @@
+tools:
+  - name: "VesselFinder"
+    url: "https://www.vesselfinder.com"
+    description: "A free AIS vessel tracking website that displays real-time ship positions and marine traffic detected by the global AIS network."
+  - name: "MarineTraffic"
+    url: "https://www.marinetraffic.com"
+    description: "Platform providing real-time information on ship movements and port activity based on AIS data."
+  - name: "FleetMon"
+    url: "https://www.fleetmon.com"
+    description: "Maritime traffic monitoring service tracking vessels worldwide with ship database and port information."
+  - name: "MyShipTracking"
+    url: "https://www.myshiptracking.com"
+    description: "Real-time vessel tracking service with ship and port information."

@@ -1,0 +1,7 @@
+tools:
+  - name: "Adium"
+    url: "https://adium.im"
+    description: "Free instant messaging application for macOS that supports multiple chat protocols with encryption."
+  - name: "Chatsecure"
+    url: "https://chatsecure.org"
+    description: "Encrypted messaging app for iOS with OTR encryption over XMPP."

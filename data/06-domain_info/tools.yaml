@@ -1,0 +1,6 @@
+tools:
+  # This file contains tools that haven't been categorized yet
+  # Most tools have been moved to subcategories:
+  # - 01-dns_subdomain
+  # - 02-whois_info
+  # - 03-dns_tools

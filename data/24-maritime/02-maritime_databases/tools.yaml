@@ -1,0 +1,10 @@
+tools:
+  - name: "Equasis"
+    url: "http://www.equasis.org"
+    description: "Public database providing safety-related information on ships and companies."
+  - name: "ShipSpotting"
+    url: "http://www.shipspotting.com"
+    description: "Database of ship images and vessel information contributed by maritime enthusiasts."
+  - name: "IMO Ship Finder"
+    url: "https://gisis.imo.org/Public/SHIPS/Default.aspx"
+    description: "Official International Maritime Organization database allowing searches on ship identification data."

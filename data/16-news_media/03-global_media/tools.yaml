@@ -1,0 +1,13 @@
+tools:
+  - name: "BBC News"
+    url: "http://www.bbc.co.uk/news"
+    description: "British Broadcasting Corporation's news service providing international coverage."
+  - name: "CNN"
+    url: "http://edition.cnn.com"
+    description: "Cable News Network's international news coverage."
+  - name: "Euronews"
+    url: "http://www.euronews.com"
+    description: "European multilingual news media service."
+  - name: "France24"
+    url: "http://www.france24.com"
+    description: "International news channel broadcasting in multiple languages."

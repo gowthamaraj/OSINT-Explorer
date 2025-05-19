@@ -1,0 +1,13 @@
+tools:
+  - name: "Find-pdf-doc"
+    url: "http://www.findpdfdoc.com"
+    description: "Search engine for PDF and DOC files."
+  - name: "Free Full PDF"
+    url: "http://www.freefullpdf.com"
+    description: "Search engine for scientific publications in PDF format."
+  - name: "Scribd"
+    url: "http://www.scribd.com"
+    description: "Digital library, e-book and audiobook subscription service."
+  - name: "SlideShare"
+    url: "http://www.slideshare.net"
+    description: "Community for sharing presentations and professional content."

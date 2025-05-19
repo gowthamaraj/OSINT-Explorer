@@ -1,0 +1,10 @@
+tools:
+  - name: "OnionScan"
+    url: "https://github.com/s-rah/onionscan"
+    description: "Free and open source tool for investigating the Dark Web that helps monitor and track Dark Web sites."
+  - name: "onion-lookup"
+    url: "https://onion.ail-project.org/"
+    description: "Free online service and API for checking the existence of Tor hidden services (.onion address) and retrieving their associated metadata."
+  - name: "The Hidden Wiki"
+    url: "http://zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otjiycgwqbym2qad.onion/wiki/index.php/Main_Page"
+    description: "Directory of links to .onion sites in the dark web, accessible via Tor."

@@ -1,0 +1,10 @@
+tools:
+  - name: "Canadian Business Research"
+    url: "https://www.canada.ca/en/services/business/research.html"
+    description: "Canadian government resources for business research and market intelligence."
+  - name: "Caselaw Access Project"
+    url: "https://case.law/"
+    description: "Collection of full text of historical cases from United States state appellate courts."
+  - name: "Company Registration Round the World"
+    url: "http://www.commercial-register.sg.ch/home/worldwide.html"
+    description: "Links to company registries around the world."

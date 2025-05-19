@@ -1,0 +1,10 @@
+tools:
+  - name: "Gapminder World"
+    url: "http://www.gapminder.org/data"
+    description: "Free data visualization tool with global statistics on various socioeconomic metrics."
+  - name: "Tableau Public"
+    url: "https://public.tableau.com/en-us/s/"
+    description: "Free software for creating interactive data visualizations and dashboards."
+  - name: "DataWrapper"
+    url: "https://www.datawrapper.de/"
+    description: "Tool for creating charts, maps and tables that can be embedded in articles."

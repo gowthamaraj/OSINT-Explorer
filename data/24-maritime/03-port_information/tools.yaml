@@ -1,0 +1,7 @@
+tools:
+  - name: "Digital-Seas.com"
+    url: "https://digital-seas.com"
+    description: "Maritime intelligence platform focusing on vessel tracking and maritime domain awareness."
+  - name: "Maritime-ISAC"
+    url: "https://www.maritime-isac.org"
+    description: "Information sharing and analysis center for maritime transportation security."

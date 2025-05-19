@@ -1,0 +1,10 @@
+tools:
+  - name: "Gephi"
+    url: "https://gephi.org"
+    description: "Open-source graph and network visualization software for analyzing complex networks."
+  - name: "Visual Investigative Scenarios"
+    url: "https://vis.occrp.org"
+    description: "Tool for visualizing relationships between people, companies, and other entities for investigative reporting."
+  - name: "SocNetV"
+    url: "https://socnetv.org"
+    description: "Social Network Visualizer - cross-platform tool for the analysis and visualization of social networks."

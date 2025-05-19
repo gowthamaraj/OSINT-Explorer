@@ -1,0 +1,10 @@
+tools:
+  - name: "BlackWidow"
+    url: "http://softbytelabs.com/wp/blackwidow/"
+    description: "Web spider software that extracts content and data from websites."
+  - name: "CashedPages"
+    url: "http://www.cachedpages.com"
+    description: "Service to view cached pages of websites from various search engines."
+  - name: "CachedView"
+    url: "http://cachedview.com"
+    description: "Tool to view cached pages from Google and other search engines."

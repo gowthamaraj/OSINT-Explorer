@@ -1,0 +1,10 @@
+tools:
+  - name: "DarkNetLive"
+    url: "https://darknetlive.com/"
+    description: "News service covering darknet markets, privacy, and cryptocurrency."
+  - name: "Dark.fail"
+    url: "https://dark.fail/"
+    description: "A verified list of darknet markets and services with their current status."
+  - name: "Kilos"
+    url: "http://mlyusr6htlxsyc7t2f4z53wdxh3win7q3qpxcrbam6jf3dmua7tnzuyd.onion/"
+    description: "Darknet search engine and market aggregator that allows searching across multiple marketplaces."

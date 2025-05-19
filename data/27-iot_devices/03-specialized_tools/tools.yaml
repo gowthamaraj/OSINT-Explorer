@@ -1,0 +1,13 @@
+tools:
+  - name: "TheLordEye"
+    url: "https://github.com/rlyonheart/thelordseye"
+    description: "Tool that searches for devices directly connected to the internet with customized queries for webcams, traffic lights, routers, and smart TVs."
+  - name: "CriminalIP"
+    url: "https://www.criminalip.io/"
+    description: "Comprehensive search engine for all public IPs, with search capabilities for HTML titles, meta tags, SSL certificates, and CVE IDs."
+  - name: "Hunter.how"
+    url: "https://hunter.how/"
+    description: "Specialized search engine for security researchers with search capabilities for domains, page titles, protocols, and locations."
+  - name: "MMHDAN"
+    url: "https://mmhdan.herokuapp.com"
+    description: "Tool to calculate website fingerprints (HTML, Favicon, Certificate) and create quick links to search in IoT search engines."

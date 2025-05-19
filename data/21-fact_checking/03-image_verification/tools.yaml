@@ -1,0 +1,10 @@
+tools:
+  - name: "FotoForensics"
+    url: "https://fotoforensics.com/"
+    description: "Tool for analyzing digital photos for signs of manipulation through error level analysis."
+  - name: "InVID Verification Plugin"
+    url: "https://www.invid-project.eu/tools-and-services/invid-verification-plugin/"
+    description: "Browser extension that provides tools to help verify images and videos."
+  - name: "TinEye"
+    url: "https://tineye.com/"
+    description: "Reverse image search engine to find where an image appears online and identify manipulated versions."

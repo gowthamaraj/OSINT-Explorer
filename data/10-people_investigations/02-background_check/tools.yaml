@@ -1,0 +1,13 @@
+tools:
+  - name: "Black Book Online"
+    url: "https://www.blackbookonline.info"
+    description: "Free nationwide directory of public record lookups."
+  - name: "CrunchBase"
+    url: "http://www.crunchbase.com"
+    description: "Business information database, with a focus on investment, acquisition, and executive data."
+  - name: "Federal Bureau of Prisons - Inmate Locator"
+    url: "http://www.bop.gov/inmateloc"
+    description: "Search federal inmates incarcerated in the US from 1982 to the present."
+  - name: "FamilyTreeNow"
+    url: "https://familytreenow.com"
+    description: "Research family and genealogy, search addresses, phone numbers, and email addresses as well as associations."

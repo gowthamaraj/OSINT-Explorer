@@ -1,0 +1,13 @@
+tools:
+  - name: "Emergent"
+    url: "http://www.emergent.info"
+    description: "Real-time rumor tracker that monitors how unverified information spreads online."
+  - name: "Fact Check"
+    url: "http://www.factcheck.org"
+    description: "Nonpartisan, nonprofit website that aims to reduce deception in U.S. politics."
+  - name: "Full Fact"
+    url: "https://fullfact.org"
+    description: "UK's independent fact checking charity that checks claims made by politicians, media, and pressure groups."
+  - name: "Snopes"
+    url: "http://www.snopes.com"
+    description: "The definitive Internet reference source for urban legends, folklore, myths, rumors, and misinformation."

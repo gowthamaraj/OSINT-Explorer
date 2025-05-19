@@ -1,0 +1,13 @@
+tools:
+  - name: "Grey Guide"
+    url: "http://greyguide.isti.cnr.it"
+    description: "Repository for document types traditionally classified as 'grey literature' in research and academia."
+  - name: "Grey Literature Strategies"
+    url: "http://greylitstrategies.info"
+    description: "Resources and strategies for finding grey literature in research."
+  - name: "Grey Literature – List of Gateways"
+    url: "http://csulb.libguides.com/graylit"
+    description: "Comprehensive list of gateways to grey literature resources and collections."
+  - name: "GreyNet International"
+    url: "http://www.greynet.org"
+    description: "Organization dedicated to research, publication, and education in the field of grey literature."

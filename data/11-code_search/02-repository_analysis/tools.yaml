@@ -1,0 +1,10 @@
+tools:
+  - name: "AnalyzeID"
+    url: "https://analyzeid.com/"
+    description: "Find other websites owned by the same person."
+  - name: "Code Finder"
+    url: "https://codefinder.dev/"
+    description: "The ultimate search engine for finding GitHub repositories."
+  - name: "Reposearch"
+    url: "http://codefinder.org/"
+    description: "Search engine specifically designed for finding code repositories."

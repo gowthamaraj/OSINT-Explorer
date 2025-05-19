@@ -1,0 +1,13 @@
+tools:
+  - name: "Betaface"
+    url: "https://www.betaface.com/demo.html"
+    description: "Face detection and recognition with detailed analysis."
+  - name: "FaceCheck.ID"
+    url: "https://facecheck.id"
+    description: "Facial recognition search engine."
+  - name: "Faceagle"
+    url: "https://faceagle.com/"
+    description: "Face recognition search engine."
+  - name: "Image Identification Project"
+    url: "https://www.imageidentify.com"
+    description: "Uses AI to identify the content of images."

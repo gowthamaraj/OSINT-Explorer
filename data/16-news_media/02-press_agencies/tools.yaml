@@ -1,0 +1,13 @@
+tools:
+  - name: "Agence France-Presse (AFP)"
+    url: "http://www.afp.com"
+    description: "Global news agency providing fast, comprehensive coverage of events around the world."
+  - name: "Associated Press (AP)"
+    url: "http://hosted.ap.org"
+    description: "Independent global news organization delivering fact-based journalism across all media platforms."
+  - name: "DPA International"
+    url: "http://www.dpa-international.com"
+    description: "German Press Agency's international news service."
+  - name: "Factiva"
+    url: "http://www.dowjones.com/factiva"
+    description: "Dow Jones' global news database and research tool with premium content."

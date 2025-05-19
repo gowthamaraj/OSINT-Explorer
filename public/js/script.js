@@ -3,6 +3,8 @@ let myChart;
 let chartData;
 let searchTimeout;
 const categories = new Set();
+let currentViewMode = 'tree'; // Track current view mode
+let showLabels = true; // Track label visibility
 
 // Initialize the chart
 function initTreeChart() {
@@ -19,6 +21,9 @@ function initTreeChart() {
 
       // Initialize the category filter
       initCategoryFilter();
+      
+      // Initialize view mode controls
+      initViewModeControls();
     })
     .catch(error => {
       console.error('Error loading data:', error);
@@ -26,6 +31,78 @@ function initTreeChart() {
       document.getElementById('errorMessage').textContent = 'Failed to load data. Please try again later.';
       document.getElementById('errorMessage').style.display = 'block';
     });
+}
+
+// Initialize view mode controls
+function initViewModeControls() {
+  // Tree view mode button
+  document.getElementById('treeViewMode').addEventListener('click', function(e) {
+    e.preventDefault();
+    if (currentViewMode !== 'tree') {
+      currentViewMode = 'tree';
+      animateViewChange(chartData);
+    }
+  });
+  
+  // Radial view mode button
+  document.getElementById('radialViewMode').addEventListener('click', function(e) {
+    e.preventDefault();
+    if (currentViewMode !== 'radial') {
+      currentViewMode = 'radial';
+      animateViewChange(chartData);
+    }
+  });
+  
+  // Toggle labels button
+  document.getElementById('toggleLabels').addEventListener('click', function(e) {
+    e.preventDefault();
+    showLabels = !showLabels;
+    updateChartLabels();
+  });
+}
+
+// Animate the transition between view modes with improved animation
+function animateViewChange(data) {
+  if (!myChart) return;
+  
+  // Create transition effect
+  document.getElementById('treeChart').classList.add('chart-transition');
+  
+  // Apply fade out effect
+  myChart.getDom().style.opacity = 0;
+  
+  // Create visual effect for transition
+  const animContainer = document.createElement('div');
+  animContainer.className = 'chart-animation-container';
+  document.getElementById('treeChartContainer').appendChild(animContainer);
+  
+  // Wait for fade out to complete
+  setTimeout(() => {
+    // Render with new view mode
+    renderChart(data);
+    
+    // Fade back in
+    myChart.getDom().style.opacity = 1;
+    
+    // Remove animation container
+    setTimeout(() => {
+      document.getElementById('treeChartContainer').removeChild(animContainer);
+      document.getElementById('treeChart').classList.remove('chart-transition');
+    }, 800);
+  }, 400);
+}
+
+// Update chart labels based on showLabels setting
+function updateChartLabels() {
+  if (!myChart) return;
+  
+  myChart.setOption({
+    series: [{
+      label: {
+        show: showLabels
+      }
+    }]
+  });
 }
 
 // Preprocess the data to add colors, icons, and other properties
@@ -101,46 +178,112 @@ function preprocessData(data) {
   }
 
   assignProperties(data);
+  
+  // Add spacing properties to nodes
+  function addSpacingProperties(node, depth = 0) {
+    // Set node-specific spacing properties
+    node.spacing = {
+      horizontal: 50 + (depth * 10), // Increase spacing with depth
+      vertical: 40
+    };
+    
+    // Process children recursively
+    if (node.children && node.children.length > 0) {
+      node.children.forEach(child => addSpacingProperties(child, depth + 1));
+    }
+  }
+  
+  // Apply spacing properties
+  addSpacingProperties(data);
   return data;
 }
 
 // Render the chart with the given data
 function renderChart(data) {
   const container = document.getElementById('treeChart');
-  myChart = echarts.init(container);
+  
+  // If chart already exists, dispose it
+  if (myChart) {
+    myChart.dispose();
+  }
+  
+  myChart = echarts.init(container, null, { renderer: 'canvas' });
 
-  const option = {
+  // Common options for both view modes
+  const commonOptions = {
     tooltip: {
       trigger: 'item',
-      backgroundColor: 'rgba(50, 50, 50, 0.9)',
+      backgroundColor: 'rgba(40, 44, 52, 0.85)',
       borderColor: '#00ff00',
-      borderWidth: 1,
+      borderWidth: 2,
       textStyle: {
-        color: '#fff'
+        color: '#fff',
+        fontSize: 13
       },
+      padding: 15,
       confine: true
     },
-    series: [
-      {
+    toolbox: {
+      feature: {
+        restore: {
+          title: 'Reset View'
+        },
+        saveAsImage: {
+          title: 'Save as Image',
+          pixelRatio: 2
+        }
+      },
+      iconStyle: {
+        color: '#00ff00',
+        borderColor: '#00ff00'
+      },
+      right: 20,
+      top: 20
+    }
+  };
+
+  // View-specific options
+  let viewSpecificOptions;
+  
+  if (currentViewMode === 'tree') {
+    viewSpecificOptions = {
+      series: [{
         type: 'tree',
         data: [data],
         symbol: 'rect',
-        symbolSize: [160, 40],
-        top: '5%',
-        left: '7%',
-        bottom: '5%',
-        right: '7%',
+        symbolSize: [200, 50],  // Increased rectangle size
+        top: '8%',
+        left: '15%',  // More left margin
+        bottom: '8%',
+        right: '25%',  // More right margin
         layout: 'orthogonal',
         orient: 'LR',
+        nodePadding: 50,  // Increased node padding
+        itemStyle: {
+          borderRadius: 12,
+          borderColor: '#00ff00',
+          shadowColor: 'rgba(0, 255, 0, 0.2)',
+          shadowBlur: 5
+        },
+        lineStyle: {
+          color: '#00ff00',
+          width: 1.2,
+          curveness: 0.5,
+          shadowColor: 'rgba(0, 255, 0, 0.3)',
+          shadowBlur: 5,
+          opacity: 0.7
+        },
         label: {
+          show: showLabels,
           color: '#fff',
           position: 'inside',
           verticalAlign: 'middle',
           align: 'center',
-          fontSize: 10,
+          fontSize: 12,  // Larger font
           fontWeight: 'bold',
           formatter: function(params) {
-            return params.data.name;
+            const name = params.data.originalName || params.data.name.substring(2).trim();
+            return name.length > 20 ? name.substring(0, 18) + '...' : name;
           }
         },
         leaves: {
@@ -154,48 +297,114 @@ function renderChart(data) {
         emphasis: {
           focus: 'descendant',
           itemStyle: {
-            shadowBlur: 10,
+            shadowBlur: 15,
             shadowColor: 'rgba(0, 255, 0, 0.7)'
+          },
+          lineStyle: {
+            width: 2.5,
+            color: '#0f0'
           }
         },
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: '#00ff00',
-        },
-        lineStyle: {
-          color: '#00ff00',
-          width: 1.5,
-          curveness: 0.5
-        },
+        initialTreeDepth: 1,
         roam: true,
         expandAndCollapse: true,
-        initialTreeDepth: 1,
         animationDuration: 750,
         animationDurationUpdate: 750,
         animationEasing: 'elasticOut',
-      }
-    ],
-    toolbox: {
-      feature: {
-        restore: {
-          title: 'Reset View'
+      }]
+    };
+  } else {
+    // Radial view options
+    viewSpecificOptions = {
+      series: [{
+        type: 'tree',
+        data: [data],
+        symbol: 'circle',
+        symbolSize: 30,  // Larger circles
+        initialTreeDepth: 1,
+        layout: 'radial',
+        top: '5%',
+        left: '10%',  // More left space
+        bottom: '5%',
+        right: '10%',  // More right space
+        roam: true,
+        nodeGap: 30,  // Increased node gap
+        edgeShape: 'curve',
+        edgeForkPosition: '70%',
+        label: {
+          show: showLabels,
+          position: 'right',
+          verticalAlign: 'middle',
+          align: 'left',
+          fontSize: 12,
+          color: '#fff',
+          distance: 10,  // Increased distance
+          formatter: function(params) {
+            const displayName = params.data.originalName || params.data.name.substring(2).trim();
+            return displayName.length > 18 ? displayName.substring(0, 16) + '...' : displayName;
+          },
+          backgroundColor: 'rgba(30, 30, 30, 0.7)',
+          padding: [4, 7],
+          borderRadius: 4
         },
-        saveAsImage: {
-          title: 'Save as Image'
+        leaves: {
+          label: {
+            position: 'right',
+            verticalAlign: 'middle',
+            align: 'left',
+            distance: 10  // Increased distance
+          }
+        },
+        emphasis: {
+          focus: 'descendant',
+          itemStyle: {
+            shadowBlur: 15,
+            shadowColor: 'rgba(0, 255, 0, 0.7)'
+          },
+          lineStyle: {
+            width: 2,
+            color: '#0f0'
+          }
+        },
+        expandAndCollapse: true,
+        animationDuration: 750,
+        animationDurationUpdate: 750,
+        animationEasing: 'elasticOut',
+        itemStyle: {
+          color: function(params) {
+            return params.data.itemStyle ? params.data.itemStyle.color : '#555';
+          },
+          borderWidth: 2.5,
+          borderColor: '#00ff00',
+          shadowColor: 'rgba(0, 255, 0, 0.2)',
+          shadowBlur: 5
+        },
+        lineStyle: {
+          color: 'rgba(0, 255, 0, 0.6)',
+          width: 1.5,
+          curveness: 0.5,
+          opacity: 0.7
         }
-      },
-      iconStyle: {
-        color: '#00ff00',
-        borderColor: '#00ff00'
-      }
-    }
-  };
+      }]
+    };
+  }
 
+  // Merge options
+  const option = { ...commonOptions, ...viewSpecificOptions };
+  
+  // Apply options with animation
   myChart.setOption(option);
 
-  // Resize handler
+  // Update zoom indicator
+  updateZoomIndicator(1.0);
+
+  // Resize handler with debounce for performance
+  let resizeTimeout;
   window.addEventListener('resize', () => {
-    myChart.resize();
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      myChart.resize();
+    }, 100);
   });
 
   // Event listener for node click
@@ -204,6 +413,35 @@ function renderChart(data) {
       showNodeInfo(params.data);
     }
   });
+  
+  // Listen for zoom changes to update the zoom indicator
+  myChart.on('datazoom', function(params) {
+    const zoom = myChart.getOption().series[0].zoom || 1;
+    updateZoomIndicator(zoom);
+  });
+
+  // Add visual effect when nodes expand/collapse
+  myChart.on('treeExpandChange', function() {
+    setTimeout(() => {
+      // Create a subtle glow effect on relevant nodes
+      const glowEffect = document.createElement('div');
+      glowEffect.className = 'glow-effect';
+      container.appendChild(glowEffect);
+      
+      // Remove the glow effect after animation
+      setTimeout(() => {
+        container.removeChild(glowEffect);
+      }, 500);
+    }, 300);
+  });
+}
+
+// Update zoom indicator
+function updateZoomIndicator(zoom) {
+  const indicator = document.getElementById('zoomIndicator');
+  if (indicator) {
+    indicator.querySelector('.zoom-level').textContent = `${zoom.toFixed(1)}x`;
+  }
 }
 
 // Show node information in the modal
@@ -509,6 +747,84 @@ function toggleDarkMode() {
   }
 }
 
+// Update view mode controls initialization
+function initViewModeControls() {
+  const treeViewBtn = document.getElementById('treeViewMode');
+  const radialViewBtn = document.getElementById('radialViewMode');
+  const toggleLabelsBtn = document.getElementById('toggleLabels');
+  
+  // Set initial active state
+  treeViewBtn.classList.add('active-view-mode');
+  
+  // Tree view mode button
+  treeViewBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (currentViewMode !== 'tree') {
+      currentViewMode = 'tree';
+      
+      // Update active state
+      radialViewBtn.classList.remove('active-view-mode');
+      treeViewBtn.classList.add('active-view-mode');
+      
+      // Show transition message
+      showTransitionMessage('Switching to Tree View');
+      
+      // Animate view change
+      animateViewChange(chartData);
+    }
+  });
+  
+  // Radial view mode button
+  radialViewBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (currentViewMode !== 'radial') {
+      currentViewMode = 'radial';
+      
+      // Update active state
+      treeViewBtn.classList.remove('active-view-mode');
+      radialViewBtn.classList.add('active-view-mode');
+      
+      // Show transition message
+      showTransitionMessage('Switching to Radial View');
+      
+      // Animate view change
+      animateViewChange(chartData);
+    }
+  });
+  
+  // Toggle labels button
+  toggleLabelsBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    showLabels = !showLabels;
+    
+    // Show transition message
+    showTransitionMessage(showLabels ? 'Showing Labels' : 'Hiding Labels');
+    
+    // Update chart labels
+    updateChartLabels();
+  });
+}
+
+// Show a temporary transition message
+function showTransitionMessage(message) {
+  // Create message element if it doesn't exist
+  let transitionMsg = document.getElementById('transitionMessage');
+  if (!transitionMsg) {
+    transitionMsg = document.createElement('div');
+    transitionMsg.id = 'transitionMessage';
+    document.getElementById('treeChartContainer').appendChild(transitionMsg);
+  }
+  
+  // Set message and show
+  transitionMsg.textContent = message;
+  transitionMsg.classList.add('show');
+  
+  // Hide after timeout
+  setTimeout(() => {
+    transitionMsg.classList.remove('show');
+  }, 1500);
+}
+
 // Initialize everything when the DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize chart
@@ -643,4 +959,7 @@ document.addEventListener('DOMContentLoaded', function() {
   tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
+
+  // Initialize view mode controls
+  initViewModeControls();
 });

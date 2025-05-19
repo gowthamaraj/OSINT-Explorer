@@ -1,0 +1,10 @@
+tools:
+  - name: "ORA"
+    url: "http://www.casos.cs.cmu.edu/projects/ora/software.php"
+    description: "Network analysis tool for dynamic meta-networks developed by CASOS at Carnegie Mellon."
+  - name: "Sentinel Visualizer"
+    url: "http://www.fmsasg.com"
+    description: "Analysis tool that provides visual link analysis, geospatial mapping, and social network analysis."
+  - name: "Analyst's Notebook"
+    url: "https://www.ibm.com/products/i2-analysts-notebook"
+    description: "IBM i2 tool for data analysis and visualization to discover patterns, connections, and insights."

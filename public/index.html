@@ -98,12 +98,18 @@
     </div>
 
     <!-- Tree Chart Container -->
-    <div id="treeChartContainer">
-      <div id="treeChart"></div>
+    <div id="treeChartContainer" class="chart-container-expanded">
+      <div id="treeChart" class="tree-layout-spacious"></div>
       <div id="loading">
         <div class="spinner"></div>
+        <div class="loading-text">Preparing visualization...</div>
       </div>
       <div id="errorMessage" class="alert alert-danger"></div>
+      <div id="zoomIndicator">
+        <div class="zoom-level">1.0x</div>
+      </div>
+      <div id="transitionMessage"></div>
+      <div id="nodeHighlightOverlay"></div>
     </div>
   </main>
 

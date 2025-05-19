@@ -1,0 +1,13 @@
+tools:
+  - name: "de digger"
+    url: "https://www.dedigger.com/"
+    description: "Search engine for finding files publicly available in Google Drive."
+  - name: "FileListing"
+    url: "https://filelisting.com/"
+    description: "Directory of open directories on the internet."
+  - name: "FilePursuit"
+    url: "https://filepursuit.com/"
+    description: "Advanced file search engine that indexes directories of files and documents."
+  - name: "NAPALM FTP Indexer"
+    url: "https://www.searchftps.net/"
+    description: "Search engine for FTP servers."

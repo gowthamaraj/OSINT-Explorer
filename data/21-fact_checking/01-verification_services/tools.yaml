@@ -1,0 +1,10 @@
+tools:
+  - name: "Captain Fact"
+    url: "https://captainfact.io/"
+    description: "Collaborative, real-time fact checking platform for online videos."
+  - name: "Check"
+    url: "https://meedan.com/check"
+    description: "Collaborative verification platform for investigating and verifying digital content."
+  - name: "Verification Handbook"
+    url: "http://verificationhandbook.com"
+    description: "Resource for journalists and aid providers that offers tools and techniques for verification of digital content."

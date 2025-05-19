@@ -1,0 +1,10 @@
+tools:
+  - name: "Email Address Validator"
+    url: "http://www.email-validator.net"
+    description: "Improve deliverability, reduce bounce rates, prevent fraud and minimize funnel leaks."
+  - name: "EmailHippo"
+    url: "https://tools.verifyemailaddress.io"
+    description: "An email address verification platform that will check whether a given email address exists or not."
+  - name: "MailTester"
+    url: "http://mailtester.com"
+    description: "Hunt for emails and improve your email deliverability."

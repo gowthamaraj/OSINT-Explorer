@@ -1,0 +1,10 @@
+tools:
+  - name: "Goodsearch"
+    url: "https://www.goodsearch.com"
+    description: "A search engine for shopping deals online."
+  - name: "Instya"
+    url: "https://www.instya.com"
+    description: "Searching shopping sites, dictionaries, answer sites, news, images, videos and much more."
+  - name: "Wolfram Alpha"
+    url: "https://www.wolframalpha.com"
+    description: "A computational knowledge engine that computes expert-level answers using breakthrough algorithms, knowledgebase and AI technology."

@@ -1,0 +1,13 @@
+tools:
+  - name: "CallerID Test"
+    url: "https://calleridtest.com/"
+    description: "Get caller ID and telco carrier information back from a phone number."
+  - name: "FreeCarrierLookup"
+    url: "https://freecarrierlookup.com/"
+    description: "Enter a phone number and get the carrier name and whether the number is wireless or landline, plus email-to-SMS gateway addresses for USA and Canadian numbers."
+  - name: "InMobPrefix"
+    url: "https://github.com/hstsethi/in-mob-prefix"
+    description: "Dataset, charts, models about mobile phone numbers prefixes in India along with their respective state, operator."
+  - name: "Twilio"
+    url: "https://www.twilio.com/docs/lookup/v2-api"
+    description: "Look up a phone number's carrier type, location, etc. Twilio offers free accounts with credits for their API."

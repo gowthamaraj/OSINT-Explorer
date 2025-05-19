@@ -1,0 +1,10 @@
+tools:
+  - name: "BlockCypher Explorer"
+    url: "https://blockcypher.herokuapp.com/"
+    description: "Blockchain explorer for Bitcoin, Ethereum, Litecoin, DogeCoin, and Dash with detailed transaction information."
+  - name: "Etherscan"
+    url: "https://etherscan.io/"
+    description: "Comprehensive Ethereum blockchain explorer for searching transactions, addresses, tokens, and smart contracts."
+  - name: "LearnMeBitcoin Path Finder"
+    url: "https://learnmeabitcoin.com/tools/path/"
+    description: "Tool to find transaction paths between two Bitcoin addresses."

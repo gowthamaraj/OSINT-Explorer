@@ -1,0 +1,13 @@
+tools:
+  - name: "uBlock Origin"
+    url: "https://github.com/gorhill/uBlock"
+    description: "Efficient blocker for browsers that improves privacy when conducting OSINT research."
+  - name: "Privacy Badger"
+    url: "https://privacybadger.org/"
+    description: "Extension that automatically learns to block invisible trackers to protect your privacy during investigations."
+  - name: "User-Agent Switcher"
+    url: "https://chrome.google.com/webstore/detail/user-agent-switcher-for-c/djflhoibgkdhkhhcedjiklpkjnoahfmg"
+    description: "Extension that enables you to switch browser user-agents, making it appear you're using a different browser or device."
+  - name: "Distill Web Monitor"
+    url: "https://distill.io"
+    description: "Tool that monitors websites for changes, which is useful for tracking updates to specific pages."
